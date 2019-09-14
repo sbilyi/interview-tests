@@ -2,13 +2,14 @@ package com.sbilyi.solution;
 
 import java.util.Arrays;
 
-public class EasyOneMemorySafeSolution implements Solution {
+public class EasyOneO1MemorySolution implements Solution {
+
     @Override
-    public int solve(int[] input) {
-        int result = DEFAULT_VALUE;
+    public int solve(int[] input) throws IllegalArgumentException {
+        Integer result = null;
 
         if (input.length % 2 != 1) {
-            return DEFAULT_VALUE;
+            throw new IllegalArgumentException("There couldn't be odd number of elements");
         }
         if (input.length == 1) {
             return input[0];
@@ -21,10 +22,10 @@ public class EasyOneMemorySafeSolution implements Solution {
                 break;
             }
             if (input[i] != input[i + 1]) {
-                if (!alreadyFoundResult(result, DEFAULT_VALUE)) {
+                if (!alreadyFoundResult(result)) {
                     result = input[i];
                 } else {
-                    return DEFAULT_VALUE;
+                    throw new IllegalArgumentException("There couldn't be more than one unique number");
                 }
             }
         }
@@ -32,7 +33,7 @@ public class EasyOneMemorySafeSolution implements Solution {
         return result;
     }
 
-    private static boolean alreadyFoundResult(int result, int i) {
-        return result != i;
+    private static boolean alreadyFoundResult(Integer result) {
+        return result != null;
     }
 }

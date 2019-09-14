@@ -5,12 +5,10 @@ import java.util.Set;
 
 public class EasyOneSolution implements Solution {
 
-    private static final int DEFAULT_VALUE = -1;
-
     @Override
-    public int solve(int[] input) {
+    public int solve(int[] input) throws IllegalArgumentException {
         if (input.length % 2 != 1) {
-            return DEFAULT_VALUE;
+            throw new IllegalArgumentException("There couldn't be odd number of elements");
         }
 
         Set<Integer> markedElements = new HashSet<>();
@@ -23,6 +21,10 @@ public class EasyOneSolution implements Solution {
             }
         }
 
-        return markedElements.size() != 1 ? DEFAULT_VALUE : markedElements.iterator().next();
+        if (markedElements.size() != 1) {
+            throw new IllegalArgumentException("There couldn't be more than one unique number");
+        } else {
+            return markedElements.iterator().next();
+        }
     }
 }
