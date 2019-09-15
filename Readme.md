@@ -48,12 +48,6 @@ Or you can use exact solution to get it tested. All solution are located in com.
    for(int i=0;i < result.length; i++) {
         System.out.println(result[i]);   
     }
-   
-
-
-
-
-
 ```
 Better implementation would have real tests in junit. Separate independent implementations of each solution, which could be used as is.  
 It is done this way because of wish to made it cli supported generic for further solution library.
