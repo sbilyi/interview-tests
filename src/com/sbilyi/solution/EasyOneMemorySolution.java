@@ -2,7 +2,7 @@ package com.sbilyi.solution;
 
 import java.util.Arrays;
 
-public class EasyOneO1MemorySolution implements Solution {
+public class EasyOneMemorySolution implements EasyOneSolution {
 
     @Override
     public int solve(int[] input) throws IllegalArgumentException {
