@@ -15,8 +15,9 @@ import java.util.function.Function;
 
 public class Main {
 
-    private static final IllegalArgumentException EXPECTED_EXCEPTION = new IllegalArgumentException();
-    private static final TestCase testCase = new TestCase(new TestPrinter());
+    private static final TestPrinter PRINTER = new TestPrinter();
+    private static final TestCase testCase = new TestCase(PRINTER);
+
     private static final String EASY_ONE_PROC_EFF = "easyOneProcEff";
     private static final String EASY_ONE_MEMORY_EFF = "easyOneMemoryEff";
     private static final String EASY_SECOND_SOLUTION = "easy_second_solution";
@@ -26,7 +27,10 @@ public class Main {
 
     public static void main(String[] args) {
         Map<String, Solution> solutions = getSolutions();
+        defaultTest(solutions);
+    }
 
+    private static void defaultTest(Map<String, Solution> solutions) {
         testEesyOneSolution(solutions.get(EASY_ONE_PROC_EFF));
         System.out.println();
         testEesyOneSolution(solutions.get(EASY_ONE_MEMORY_EFF));
@@ -41,7 +45,7 @@ public class Main {
     }
 
     private static void testModerateSecond(Solution<Integer, String[]> solution) {
-        new TestPrinter().print(String.format("Starting test case for %s", solution.getClass().getName()));
+        PRINTER.print(String.format("Starting test case for %s", solution.getClass().getName()));
         Function<Integer, String[]> function = solution::solve;
 
         testCase.test(new String[]{}, 0, function);
@@ -52,7 +56,7 @@ public class Main {
     }
 
     private static void testModerateOne(Solution<int[], int[]> solution) {
-        new TestPrinter().print(String.format("Starting test case for %s", solution.getClass().getName()));
+        PRINTER.print(String.format("Starting test case for %s", solution.getClass().getName()));
         Function<int[], int[]> function = solution::solve;
 
         testCase.test(new int[]{}, new int[]{}, function);
@@ -65,7 +69,7 @@ public class Main {
     }
 
     private static void testEasyTwoSolution(Solution<Integer, Integer> solution) {
-        new TestPrinter().print(String.format("Starting test case for %s", solution.getClass().getName()));
+        PRINTER.print(String.format("Starting test case for %s", solution.getClass().getName()));
         Function<Integer, Integer> function = solution::solve;
 
         testCase.test(0, -5, function);
@@ -73,6 +77,20 @@ public class Main {
         testCase.test(3, 3, function);
         testCase.test(5, 4, function);
         testCase.test(8, 5, function);
+    }
+
+    private static void testEesyOneSolution(Solution<int[], Integer> solution) {
+        final IllegalArgumentException expectedException = new IllegalArgumentException();
+        PRINTER.print(String.format("Starting test case for %s", solution.getClass().getName()));
+        Function<int[], Integer> function = solution::solve;
+
+        testCase.test(expectedException, new int[]{}, function);
+        testCase.test(11, new int[]{11}, function);
+        testCase.test(3, new int[]{1, 1, 2, 2, 3}, function);
+        testCase.test(expectedException, new int[]{1, 1, 2, 2, 3, 3}, function);
+        testCase.test(3, new int[]{1, 1, 2, 2, 3, 3, 3}, function); // this is OK due to the issue limitations, the input should'n have more than 2 copies of same obj
+        testCase.test(expectedException, new int[]{1, 2, 3, 4, 5, 6, 7}, function);
+        testCase.test(7, new int[]{1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1}, function);
     }
 
     private static Map<String, Solution> getSolutions() {
@@ -85,19 +103,5 @@ public class Main {
         solutions.put(BASIC_MODERATE_SECOND, new BasicModerateSecond());
         return solutions;
     }
-
-    private static void testEesyOneSolution(Solution<int[], Integer> solution) {
-        new TestPrinter().print(String.format("Starting test case for %s", solution.getClass().getName()));
-        Function<int[], Integer> function = solution::solve;
-
-        testCase.test(EXPECTED_EXCEPTION, new int[]{}, function);
-        testCase.test(11, new int[]{11}, function);
-        testCase.test(3, new int[]{1, 1, 2, 2, 3}, function);
-        testCase.test(EXPECTED_EXCEPTION, new int[]{1, 1, 2, 2, 3, 3}, function);
-        testCase.test(3, new int[]{1, 1, 2, 2, 3, 3, 3}, function); // this is OK due to the issue limitations, the input should'n have more than 2 copies of same obj
-        testCase.test(EXPECTED_EXCEPTION, new int[]{1, 2, 3, 4, 5, 6, 7}, function);
-        testCase.test(7, new int[]{1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1}, function);
-    }
-
 
 }
