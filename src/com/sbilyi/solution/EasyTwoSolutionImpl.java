@@ -17,14 +17,20 @@ public class EasyTwoSolutionImpl implements EasyTwoSolution {
             return 0;
         }
 
+        int cacheIndex = input - 1;
+        ensureCapacity(input);
+
+        if (cache[cacheIndex] == null) {
+            cache[cacheIndex] = solve(input - 1) + solve(input - 2);
+        }
+
+        return cache[cacheIndex];
+    }
+
+    private void ensureCapacity(int input) {
         if (cache.length < input) {
             cache = Arrays.copyOf(cache, input);
         }
-        if (cache[input - 1] == null) {
-            cache[input - 1] = solve(input - 1) + solve(input - 2);
-        }
-
-        return cache[input - 1];
     }
 
 }
