@@ -1,4 +1,4 @@
-package com.sbilyi.solution;
+package com.sbilyi.solution.easy;
 
 /**
  * QUESTION EASY#2

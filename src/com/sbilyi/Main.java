@@ -1,9 +1,10 @@
 package com.sbilyi;
 
-import com.sbilyi.solution.EasyOneMemorySolution;
-import com.sbilyi.solution.EasyOneProcSolution;
-import com.sbilyi.solution.EasyOneSolution;
-import com.sbilyi.solution.EasyTwoSolutionImpl;
+import com.sbilyi.solution.easy.EasyOneMemorySolution;
+import com.sbilyi.solution.easy.EasyOneProcSolution;
+import com.sbilyi.solution.easy.EasyOneSolution;
+import com.sbilyi.solution.easy.EasyTwoSolutionImpl;
+import com.sbilyi.solution.moderate.OSquadNModerateOne;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,6 +26,17 @@ public class Main {
         testEesyOneSolution(solutions.get("memory")::solve);
         System.out.println();
         testEasyTwoSoltion(new EasyTwoSolutionImpl()::solve);
+        System.out.println();
+        Function<int[], int[]> moderateOneImpl = new OSquadNModerateOne()::solve;
+        testModerateOne(moderateOneImpl);
+    }
+
+    private static void testModerateOne(Function<int[], int[]> function) {
+        test(new int[]{}, new int[]{}, function);
+        test(new int[]{0}, new int[]{1}, function);
+        test(new int[]{2, 1}, new int[]{1,2}, function);
+        test(new int[]{24,12,8,6}, new int[]{1,2,3,4}, function);
+        test(new int[]{0,0,8,0}, new int[]{1,2,0,4}, function);
     }
 
     private static void testEasyTwoSoltion(Function<Integer, Integer> solution) {
@@ -98,6 +110,19 @@ public class Main {
                 expectedResult,
                 actualResult,
                 input);
+
+        System.out.println(message);
+    }
+
+    private static void test(int[] expectedResult, int[] input, Function<int[], int[]> function) {
+        int[] actualResult = function.apply(input);
+
+        String message = String.format(
+                TEST_MESSAGE_PATTERN,
+                Arrays.equals(expectedResult, actualResult) ? "passed" : "failed",
+                "[" + collectArray(expectedResult) + "]",
+                "[" + collectArray(actualResult) + "]",
+                "[" + collectArray(input) + "]");
 
         System.out.println(message);
     }

@@ -1,4 +1,4 @@
-package com.sbilyi.solution;
+package com.sbilyi.solution.easy;
 
 import java.util.Arrays;
 
