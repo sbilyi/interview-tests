@@ -18,19 +18,93 @@ public class Main {
     private static final TestPrinter PRINTER = new TestPrinter();
     private static final TestCase testCase = new TestCase(PRINTER);
 
+    /**
+     * Implement a method easy1 that given an integer array, which each element appears twice
+     * except for one. Find that one
+     * You must solve it with O(n)
+     * time-complexity
+     * Example #1
+     * Input: [1, 1, 2, 2, 3 ]
+     * Output: 3
+     * Example #2
+     * Input: [-1, 2, 4 , 2, -1]
+     * Output: 4
+     * (Optional) bonus point: solve with O(1) space-complexity
+     */
     private static final String EASY_ONE_PROC_EFF = "easyOneProcEff";
+    /**
+     * Implement a method easy1 that given an integer array, which each element appears twice
+     * except for one. Find that one
+     * You must solve it with O(n)
+     * time-complexity
+     * Example #1
+     * Input: [1, 1, 2, 2, 3 ]
+     * Output: 3
+     * Example #2
+     * Input: [-1, 2, 4 , 2, -1]
+     * Output: 4
+     * (Optional) bonus point: solve with O(1) space-complexity
+     */
     private static final String EASY_ONE_MEMORY_EFF = "easyOneMemoryEff";
+    /**
+     * QUESTION EASY#2
+     * When climbing a stair, you can either take 1 step or 2 steps.
+     * Implement a method easy2 that given a number of steps of a stair, returns how many distinct
+     * ways to reach the top
+     * Example
+     * Input: 3
+     * Output: 3
+     * ( 1. 1 step + 1 step + 1 step
+     * 2. 1 step + 2 steps
+     * 3. 2 steps + 1 step)
+     */
     private static final String EASY_SECOND_SOLUTION = "easy_second_solution";
+
+    /**
+     * QUESTION MODERATE#1
+     * Implement a method moderate1 that given an array of integers nums , returns an array of
+     * integers output where output[i] = product of all elements in nums except nums[i]
+     * You must solve it with O(n) time-complexity and without using division operation
+     * Example
+     * Input: [1, 2, 3, 4]
+     * Output: [24, 12, 8, 6]
+     * From the example, output[1] = product of all elements in nums except nums[1] which is 1 *
+     * 3 * 4 = 12
+     * (Optional) bonus point: solve with O(1) space-complexity (except the output array)
+     */
     private static final String O_SQUAD_N_MODERATE_ONE = "o_squad_n_moderate_one";
+    /**
+     * QUESTION MODERATE#1
+     * Implement a method moderate1 that given an array of integers nums , returns an array of
+     * integers output where output[i] = product of all elements in nums except nums[i]
+     * You must solve it with O(n) time-complexity and without using division operation
+     * Example
+     * Input: [1, 2, 3, 4]
+     * Output: [24, 12, 8, 6]
+     * From the example, output[1] = product of all elements in nums except nums[1] which is 1 *
+     * 3 * 4 = 12
+     * (Optional) bonus point: solve with O(1) space-complexity (except the output array)
+     */
     private static final String O_N_MODERATE_ONE = "o_n_moderate_one";
+    /**
+     * QUESTION MODERATE#2
+     * Implement a method moderate2 that given an integer which is the number of parentheses,
+     * returns a set (array) of strings of all possible well-formed combinations
+     * Example #1:
+     * Input: 2
+     * Output: [“()()”, “(())”]
+     * Example #2:
+     * Input: 3
+     * Output: [“((()))”, “(()())”, “()()()”, “()(())”, “(())()”]
+     */
     private static final String BASIC_MODERATE_SECOND = "basic_moderate_second";
 
     public static void main(String[] args) {
         Map<String, Solution> solutions = getSolutions();
-        defaultTest(solutions);
+        runAllTests(solutions);
     }
 
-    private static void defaultTest(Map<String, Solution> solutions) {
+    private static void runAllTests(Map<String, Solution> solutions) {
         testEesyOneSolution(solutions.get(EASY_ONE_PROC_EFF));
         System.out.println();
         testEesyOneSolution(solutions.get(EASY_ONE_MEMORY_EFF));
@@ -55,6 +129,7 @@ public class Main {
         testCase.test(new String[]{"((()))", "()(())", "(())()", "(()())", "()()()"}, 3, function);
     }
 
+
     private static void testModerateOne(Solution<int[], int[]> solution) {
         PRINTER.print(String.format("Starting test case for %s", solution.getClass().getName()));
         Function<int[], int[]> function = solution::solve;
@@ -67,6 +142,7 @@ public class Main {
         testCase.test(new int[]{120, 60, 40, 30, 24}, new int[]{1, 2, 3, 4, 5}, function);
         testCase.test(new int[]{200, 300, 120, 150, 120}, new int[]{3, 2, 5, 4, 5}, function);
     }
+
 
     private static void testEasyTwoSolution(Solution<Integer, Integer> solution) {
         PRINTER.print(String.format("Starting test case for %s", solution.getClass().getName()));
