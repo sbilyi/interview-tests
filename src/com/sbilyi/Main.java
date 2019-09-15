@@ -1,9 +1,11 @@
 package com.sbilyi;
 
+import com.sbilyi.solution.Printer;
 import com.sbilyi.solution.easy.EasyOneMemorySolution;
 import com.sbilyi.solution.easy.EasyOneProcSolution;
 import com.sbilyi.solution.easy.EasyOneSolution;
 import com.sbilyi.solution.easy.EasyTwoSolutionImpl;
+import com.sbilyi.solution.moderate.BasicModerateSecond;
 import com.sbilyi.solution.moderate.ONModerateOne;
 import com.sbilyi.solution.moderate.OSquadNModerateOne;
 
@@ -15,11 +17,9 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    private static final String TEST_MESSAGE_PATTERN = "%s expected %s actual %s with %s";
-    private static final int DEFAULT_VALUE = EasyOneSolution.DEFAULT_VALUE;
     private static final IllegalArgumentException EXPECTED_EXCEPTION = new IllegalArgumentException();
-    private static final String PASSED = "OK.......";
-    private static final String FAILED = "--> Fail.";
+    private static final Printer printer = new Printer();
+
 
     public static void main(String[] args) {
         Map<String, EasyOneSolution> solutions = getSolutions();
@@ -33,16 +33,26 @@ public class Main {
         testModerateOne(new OSquadNModerateOne()::solve);
         System.out.println();
         testModerateOne(new ONModerateOne()::solve);
+        System.out.println();
+        testModerateSecond(new BasicModerateSecond()::solve);
+    }
+
+    private static void testModerateSecond(Function<Integer, String[]> function) {
+        test(new String[]{}, 0, function);
+        test(new String[]{}, -5, function);
+        test(new String[]{"()"}, 1, function);
+        test(new String[]{"(())", "()()"}, 2, function);
+        test(new String[]{"((()))", "()(())", "(())()", "(()())", "()()()"}, 3, function);
     }
 
     private static void testModerateOne(Function<int[], int[]> function) {
         test(new int[]{}, new int[]{}, function);
         test(new int[]{0}, new int[]{1}, function);
-        test(new int[]{2, 1}, new int[]{1,2}, function);
-        test(new int[]{24,12,8,6}, new int[]{1,2,3,4}, function);
-        test(new int[]{0,0,8,0}, new int[]{1,2,0,4}, function);
-        test(new int[]{120,60,40,30, 24}, new int[]{1,2,3,4, 5}, function);
-        test(new int[]{200,300,120,150,120}, new int[]{3,2,5,4, 5}, function);
+        test(new int[]{2, 1}, new int[]{1, 2}, function);
+        test(new int[]{24, 12, 8, 6}, new int[]{1, 2, 3, 4}, function);
+        test(new int[]{0, 0, 8, 0}, new int[]{1, 2, 0, 4}, function);
+        test(new int[]{120, 60, 40, 30, 24}, new int[]{1, 2, 3, 4, 5}, function);
+        test(new int[]{200, 300, 120, 150, 120}, new int[]{3, 2, 5, 4, 5}, function);
     }
 
     private static void testEasyTwoSoltion(Function<Integer, Integer> solution) {
@@ -73,67 +83,69 @@ public class Main {
     private static void test(Exception expectedException, int[] input, Function<int[], Integer> function) {
         try {
             Integer actualResult = function.apply(input);
-            String message = String.format(
-                    TEST_MESSAGE_PATTERN,
-                    FAILED,
+            printer.print(
+                    false,
                     expectedException.getClass().getName(),
-                    actualResult,
+                    String.valueOf(actualResult),
                     collectArray(input));
-            System.out.println(message);
-
         } catch (Exception actualException) {
-            String message = String.format(
-                    TEST_MESSAGE_PATTERN,
-                    expectedException.getClass() == actualException.getClass() ? PASSED : FAILED,
+            printer.print(
+                    expectedException.getClass() == actualException.getClass(),
                     expectedException.getClass().getName(),
                     actualException.getClass().getName(),
                     "[" + collectArray(input) + "]");
-            System.out.println(message);
-
         }
-
     }
 
     private static void test(int expectedResult, int[] input, Function<int[], Integer> function) {
         Integer actualResult = function.apply(input);
 
-        String message = String.format(
-                TEST_MESSAGE_PATTERN,
-                actualResult == expectedResult ? PASSED : FAILED,
-                expectedResult,
-                actualResult,
+        printer.print(
+                actualResult == expectedResult,
+                String.valueOf(expectedResult),
+                String.valueOf(actualResult),
                 "[" + collectArray(input) + "]");
-
-        System.out.println(message);
     }
 
     private static void test(int expectedResult, int input, Function<Integer, Integer> function) {
         Integer actualResult = function.apply(input);
 
-        String message = String.format(
-                TEST_MESSAGE_PATTERN,
-                actualResult == expectedResult ? PASSED : FAILED,
-                expectedResult,
-                actualResult,
-                input);
-
-        System.out.println(message);
+        printer.print(
+                actualResult == expectedResult,
+                String.valueOf(expectedResult),
+                String.valueOf(actualResult),
+                String.valueOf(input));
     }
 
     private static void test(int[] expectedResult, int[] input, Function<int[], int[]> function) {
         int[] actualResult = function.apply(input);
 
-        String message = String.format(
-                TEST_MESSAGE_PATTERN,
-                Arrays.equals(expectedResult, actualResult) ? PASSED : FAILED,
+        printer.print(
+        Arrays.equals(expectedResult, actualResult),
                 "[" + collectArray(expectedResult) + "]",
                 "[" + collectArray(actualResult) + "]",
                 "[" + collectArray(input) + "]");
+    }
 
-        System.out.println(message);
+    private static void test(String[] expectedResult, int input, Function<Integer, String[]> function) {
+        String[] actualResult = function.apply(input);
+
+        printer.print(
+                Arrays.equals(expectedResult, actualResult),
+                "[" + collectArray(expectedResult) + "]",
+                "[" + collectArray(actualResult) + "]",
+                String.valueOf(input));
     }
 
     private static String collectArray(int[] input) {
         return Arrays.stream(input).mapToObj(String::valueOf).collect(Collectors.joining(","));
+    }
+
+    private static String collectArray(String[] input) {
+        if (input.length == 0) {
+            return "";
+        } else {
+            return Arrays.stream(input).map(String::valueOf).map(e -> "\'" + e + "\'").collect(Collectors.joining(","));
+        }
     }
 }
