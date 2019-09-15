@@ -25,7 +25,7 @@ Each solution has separate test runner, which could be invoked as this
     }
 ```
 
-If you want to update any test case, you can use any specific runner or create own.
+If you want to update any test case, you can use any specific runner or create own. 
 ```$java
     public static void main(String[] args) {
             Map<String, Solution> solutions = getSolutions();
@@ -41,7 +41,19 @@ If you want to update any test case, you can use any specific runner or create o
         testCase.test(*EXPECTED_VALUE*, *INPUT_VALUE*, function); 
     }
 ``` 
+Or you can use exact solution to get it tested. All solution are located in com.sbilyi.solution.(easy|moderate):
+```java
+   Solution<int[], int[]> solution = new ONModerateOne();
+   int[] result = solution.solve(new int[]{1,2,3,4,5});
+   for(int i=0;i < result.length; i++) {
+        System.out.println(result[i]);   
+    }
+   
 
+
+
+
+
+```
 Better implementation would have real tests in junit. Separate independent implementations of each solution, which could be used as is.  
-
 It is done this way because of wish to made it cli supported generic for further solution library.
