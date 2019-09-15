@@ -1,8 +1,10 @@
 package com.sbilyi.solution.easy;
 
+import com.sbilyi.solution.Solution;
+
 import java.util.Arrays;
 
-public class EasyTwoSolutionImpl implements EasyTwoSolution {
+public class EasyTwoSolutionImpl implements Solution<Integer, Integer> {
 
     private Integer[] cache = new Integer[2];
 
@@ -12,7 +14,7 @@ public class EasyTwoSolutionImpl implements EasyTwoSolution {
     }
 
     @Override
-    public int solve(int input) {
+    public Integer solve(Integer input) {
         if (input <= 0) {
             return 0;
         }

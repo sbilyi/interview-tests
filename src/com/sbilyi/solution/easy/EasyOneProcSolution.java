@@ -1,12 +1,14 @@
 package com.sbilyi.solution.easy;
 
+import com.sbilyi.solution.Solution;
+
 import java.util.HashSet;
 import java.util.Set;
 
-public class EasyOneProcSolution implements EasyOneSolution {
+public class EasyOneProcSolution implements Solution<int[], Integer> {
 
     @Override
-    public int solve(int[] input) throws IllegalArgumentException {
+    public Integer solve(int[] input) throws IllegalArgumentException {
         if (input.length % 2 != 1) {
             throw new IllegalArgumentException("There couldn't be odd number of elements");
         }

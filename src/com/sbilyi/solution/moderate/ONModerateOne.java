@@ -1,8 +1,10 @@
 package com.sbilyi.solution.moderate;
 
+import com.sbilyi.solution.Solution;
+
 import java.util.Stack;
 
-public class ONModerateOne implements ModerateOne {
+public class ONModerateOne implements Solution<int[], int[]> {
 
     @Override
     public int[] solve(int[] input) {

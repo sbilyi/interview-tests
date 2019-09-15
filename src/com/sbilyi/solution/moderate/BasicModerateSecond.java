@@ -1,14 +1,16 @@
 package com.sbilyi.solution.moderate;
 
+import com.sbilyi.solution.Solution;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
 
-public class BasicModerateSecond implements ModerateSecond {
+public class BasicModerateSecond implements Solution<Integer, String[]> {
 
     @Override
-    public String[] solve(int numberOfParentheses) {
+    public String[] solve(Integer numberOfParentheses) {
         if (numberOfParentheses <= 0) {
             return new String[]{};
         } else if (numberOfParentheses == 1) {

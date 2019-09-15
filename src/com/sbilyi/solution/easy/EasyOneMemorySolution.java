@@ -1,11 +1,13 @@
 package com.sbilyi.solution.easy;
 
+import com.sbilyi.solution.Solution;
+
 import java.util.Arrays;
 
-public class EasyOneMemorySolution implements EasyOneSolution {
+public class EasyOneMemorySolution implements Solution<int[], Integer> {
 
     @Override
-    public int solve(int[] input) throws IllegalArgumentException {
+    public Integer solve(int[] input) throws IllegalArgumentException {
         Integer result = null;
 
         if (input.length % 2 != 1) {

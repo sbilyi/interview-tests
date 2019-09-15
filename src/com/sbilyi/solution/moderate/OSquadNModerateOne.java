@@ -1,6 +1,8 @@
 package com.sbilyi.solution.moderate;
 
-public class OSquadNModerateOne implements ModerateOne {
+import com.sbilyi.solution.Solution;
+
+public class OSquadNModerateOne implements Solution<int[], int[]> {
 
     @Override
     public int[] solve(int[] input) {
